@@ -30,7 +30,7 @@ public class Main {
         String bodyStr = new String(Files.readAllBytes(Paths.get("src/main/resources/request-body.json")));
         String key = ""; // TODO: fill in your key here
         HttpRequest request = HttpRequest.newBuilder(
-                URI.create("https://api.clarifai.com/v2/models/bd367be194cf45149e75f01d59f77ba7/outputs"))
+            URI.create("https://api.clarifai.com/v2/users/clarifai/apps/main/models/general-image-recognition/versions/aa7f35c01e0642fda5cf400f543e7c40/outputs"))
             .header("Authorization", "Key " + key)
             .header("Content-Type", "application/json")
             .POST(HttpRequest.BodyPublishers.ofString(bodyStr))
