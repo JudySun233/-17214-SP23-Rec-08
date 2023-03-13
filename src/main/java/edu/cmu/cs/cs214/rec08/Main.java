@@ -24,13 +24,15 @@ public class Main {
     private static final int NUM_REQUESTS = 100;
     private static String URL_STR = "http://feature.isri.cmu.edu/";
     private static HttpClient client = HttpClient.newHttpClient();
+    private static String REQ_URI = "https://api.clarifai.com/v2/users/clarifai/apps/main/models/general-image-recognition/versions/aa7f35c01e0642fda5cf400f543e7c40/outputs";
+
 
     private static void runWebAPIRequest() throws IOException, InterruptedException {
         // read the request body
         String bodyStr = new String(Files.readAllBytes(Paths.get("src/main/resources/request-body.json")));
-        String key = ""; // TODO: fill in your key here
+        String key = ""; // TODO: fill in your PAT here
         HttpRequest request = HttpRequest.newBuilder(
-            URI.create("https://api.clarifai.com/v2/users/clarifai/apps/main/models/general-image-recognition/versions/aa7f35c01e0642fda5cf400f543e7c40/outputs"))
+            URI.create(REQ_URI))
             .header("Authorization", "Key " + key)
             .header("Content-Type", "application/json")
             .POST(HttpRequest.BodyPublishers.ofString(bodyStr))
