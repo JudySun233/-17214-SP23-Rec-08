@@ -24,7 +24,7 @@ public class Main {
     private static final int NUM_REQUESTS = 100;
     private static String URL_STR = "http://feature.isri.cmu.edu/";
     private static HttpClient client = HttpClient.newHttpClient();
-    private static String REQ_URI = "https://api.clarifai.com/v2/users/clarifai/apps/main/models/general-image-recognition/versions/aa7f35c01e0642fda5cf400f543e7c40/outputs";
+    private static String REQ_URI = "https://api.clarifai.com/v2/users/clarifai/apps/main/models/food-item-recognition/versions/1d5fd481e0cf4826aa72ec3ff049e044/outputs";
 
 
     private static void runWebAPIRequest() throws IOException, InterruptedException {
