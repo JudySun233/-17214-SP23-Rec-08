@@ -35,7 +35,7 @@ public class Main {
             .header("Content-Type", "application/json")
             .POST(HttpRequest.BodyPublishers.ofString(bodyStr))
             .build();
-        HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
+        HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString()); // client.send is a synchronous call
         System.out.println("original response in JSON format: \n" + response.body());
 
         // parse json
@@ -66,11 +66,11 @@ public class Main {
             .version(HttpClient.Version.HTTP_1_1)
             .build();
 
-        Instant start = Instant.now();
+        Instant start = Instant.now(); 
         for (int i = 0; i < NUM_REQUESTS; i++) {
             HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
-        }
-        System.out.println("Total time sync (ms): " + Duration.between(start, Instant.now()).toMillis());
+        } // each time wait for the response, and send the second request
+        System.out.println("Total time sync (ms): " + Duration.between(start, Instant.now()). toMillis()); // get the duration of how much time we need
     }
 
     /**
@@ -83,18 +83,18 @@ public class Main {
         HttpRequest request = HttpRequest.newBuilder(
                         URI.create(URL_STR))
                 .version(HttpClient.Version.HTTP_1_1)
-                .build();
+                .build(); // same to build the HTTP request
 
-        ExecutorService executorService = Executors.newSingleThreadExecutor();
+        ExecutorService executorService = Executors.newSingleThreadExecutor(); // computer: 8 calls, java: use 8 threads. now java just use one thread
         client = HttpClient.newBuilder().executor(executorService).build();
 
         Instant start = Instant.now();
 
-        CompletableFuture<HttpResponse<String>> responseFuture = client.sendAsync(request, HttpResponse.BodyHandlers.ofString());
+        CompletableFuture<HttpResponse<String>> responseFuture = client.sendAsync(request, HttpResponse.BodyHandlers.ofString()); 
         // observe when this statement is printed out to the console. 
-        responseFuture.thenRun(() -> System.out.println("do other things after finished..."));
-        System.out.println("do other things...");
-        HttpResponse<String> response = responseFuture.join();
+        responseFuture.thenRun(() -> System.out.println("do other things after finished...")); // once finish this request, then run the function, print something
+        System.out.println("do other things..."); // program will not be blocked, print this first
+        HttpResponse<String> response = responseFuture.join(); // C language join, wait for the end of the thread
         // System.out.println("The response is:" + response.body());
 
         System.out.println("Total time async for one request (ms): " + Duration.between(start, Instant.now()).toMillis());
@@ -125,7 +125,7 @@ public class Main {
          * 3. for each request, use thenAccept() to print, thenRun() to release Semaphore
          * 4. for each element in the list, use join() to get the HttpResponse<String>
          */
-
+        // use lock. get resource. 10 resources.
         System.out.println("Total time async (ms): " + Duration.between(start, Instant.now()).toMillis());
     }
 
