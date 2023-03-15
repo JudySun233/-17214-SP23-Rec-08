@@ -28,7 +28,7 @@ public class Main {
     private static void runWebAPIRequest() throws IOException, InterruptedException {
         // read the request body
         String bodyStr = new String(Files.readAllBytes(Paths.get("src/main/resources/request-body.json")));
-        String key = ""; // TODO: fill in your PAT here
+        String key = "695fe6fe90d94fa88ddcff75fa71a3cd"; // TODO: fill in your PAT here
         HttpRequest request = HttpRequest.newBuilder(
             URI.create(REQ_URI))
             .header("Authorization", "Key " + key)
